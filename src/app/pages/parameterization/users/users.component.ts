@@ -44,6 +44,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit");
   }
 
   salvar(userForm: NgForm){

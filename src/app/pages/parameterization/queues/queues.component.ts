@@ -41,6 +41,7 @@ export class QueuesComponent implements OnInit {
   }
 
   ngOnInit() {
+      console.log("ngOnInit");
   }
 
   salvar(queueForm: NgForm){

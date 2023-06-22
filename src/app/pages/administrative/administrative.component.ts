@@ -1,4 +1,4 @@
-import { StatusComponent } from './../../shared/status.component';
+import { NgxStatusComponent } from './../../shared/status.component';
 import { AttendenceFilter } from './../../shared/model/attendenceFilter';
 import { TerminalsService } from './../parameterization/terminals/terminals.service';
 import {Component, OnDestroy} from '@angular/core';
@@ -54,7 +54,7 @@ export class AdministrativeComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-
+    console.log("ngOnDestroy");
   }
 
   onChangeQueue(queueId : string){
@@ -146,7 +146,7 @@ export class AdministrativeComponent implements OnDestroy {
       status: {
         title: 'Status',
         type: 'string',
-        renderComponent: StatusComponent
+        renderComponent: NgxStatusComponent
       },
       terminal: {
         title: 'Terminal de Atendimento',

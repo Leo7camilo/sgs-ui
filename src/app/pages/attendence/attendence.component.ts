@@ -1,4 +1,4 @@
-import { StatusComponent } from './../../shared/status.component';
+import { NgxStatusComponent } from './../../shared/status.component';
 import { AttendenceFilter } from './../../shared/model/attendenceFilter';
 import { AttendenceService } from './attendence.service';
 import { TerminalsService } from './../parameterization/terminals/terminals.service';
@@ -146,7 +146,7 @@ export class AttendenceComponent implements OnInit, OnDestroy {
       status: {
         title: 'Status',
         type: 'string',
-        renderComponent: StatusComponent
+        renderComponent: NgxStatusComponent
       },
       dtCreated: {
         title: 'Data de Entrada na Fila',
