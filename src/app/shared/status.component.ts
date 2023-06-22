@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 @Component({
-  selector: 'status-component',
+  selector: 'ngx-status-component',
   template: `<a href="#" onclick="javascript:onCustom()"><i class="nb-plus"></i></a>`
 })
 export class NgxStatusComponent implements OnInit {
