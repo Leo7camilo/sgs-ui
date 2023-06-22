@@ -1,0 +1,92 @@
+<nb-card>
+
+  <nb-card-header style="text-align: center;"> Cadastro de Usuários</nb-card-header>
+
+  <nb-card-body>
+
+    <form #f="ngForm" autocomplete="off" >
+      <div class="row">
+        <div class="col-lg-6">
+          <nb-card>
+
+            <nb-card-body>
+              <div class="form-group">
+                <label for="username">Nome de Usuário</label>
+                <input type="text"  nbInput [(ngModel)]="user.username" fullWidth
+                  #username="ngModel" id="username" name="username" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fullName">Nome Completo</label>
+                <input type="text"  nbInput [(ngModel)]="user.fullName" fullWidth
+                  #fullName="ngModel" id="fullName" name="fullName" required>
+              </div>
+
+              <div class="full-name-inputs">
+                <label for="email">Email</label>
+                <input type="email"  nbInput [(ngModel)]="user.email" fullWidth
+                  #email="ngModel" id="email" name="email" required>
+
+                <label for="document">Documento</label>
+                <input type="text"  nbInput [(ngModel)]="user.document" fullWidth
+                  #document="ngModel" id="document" name="document" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password"  nbInput [(ngModel)]="user.password" fullWidth
+                  #password="ngModel" id="password" name="password" required>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-lg-6">
+          <nb-card >
+            <nb-card-header>Perfil</nb-card-header>
+            <nb-card-body>
+              <nb-select multiple placeholder="Multiple Select" name="roleId" id="profile" shape="semi-round" [(ngModel)]="user.roleId">
+                <nb-option *ngFor="let profile of profiles" [value]="profile.profileId" >
+                  {{ profile.description }}
+                </nb-option>
+              </nb-select>
+
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card >
+            <nb-card-header>Tipo de Usuário</nb-card-header>
+            <nb-card-body>
+              <nb-select selected placeholder="Tipo de Usuário" name="userType" id="userType" shape="semi-round" [(ngModel)]="user.userType" search>
+                <nb-option *ngFor="let userType of userTypes" [value]="userType" >
+                  {{ userType }}
+                </nb-option>
+              </nb-select>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+      </div>
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div class="full-name-inputs">
+      <button nbButton hero status="success" [disabled]="f.invalid" (click)="salvar(f)" >Criar</button>
+    </div>
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+  <nb-card-header>
+    Usuários Cadastradas
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,145 @@
+<nb-card>
+  <nb-card-header>Atendimento</nb-card-header>
+  <nb-card-body>
+
+    <form #f="ngForm" autocomplete="off">
+      <div class="row">
+        <div class="col-lg-6">
+          <nb-card>
+            <nb-card-body>
+
+              <div class="form-group">
+                <label for="id">Id do Atendimento</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.attendenceId" fullWidth disabled
+                  #id="ngModel" id="id" name="id" required>
+              </div>
+
+              <div class="form-group" style="padding-bottom: inherit;" *ngIf="!attendence.client">
+                <label for="attendenceId">Cliente</label>
+                <input #autoInput
+                  nbInput
+                  type="text"
+                  (input)="onChange()"
+                  placeholder="Enter value"
+                  [nbAutocomplete]="auto"
+                  fullWidth
+                  required
+                  minlength="3"/>
+                <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+                  <nb-option *ngFor="let client of filteredOptions$ | async" [value]="client.name">
+                    {{ client.name }}
+                  </nb-option>
+                </nb-autocomplete>
+
+                <button nbButton size="small"
+                        status="success"
+                        class="right"
+                        nbTooltip="Adicionar cliente"
+                        nbTooltipPlacement="top"
+                        (click)="onAddClient()"
+                        >
+                        <nb-icon icon="plus-circle-outline"></nb-icon>
+                </button>
+              </div>
+
+              <div class="form-group" style="padding-bottom: inherit;" *ngIf="attendence.client">
+                <label for="attendenceId">Cliente</label>
+                <input type="text" nbInput fullWidth disabled [value]="attendence.client.name">
+              </div>
+
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.password" fullWidth disabled
+                  #password="ngModel" id="password" name="password" required>
+              </div>
+
+
+              <div class="form-group" *ngIf="attendence.queue?.queueId">
+                <label for="queueId">QueueId</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.queue.queueId" fullWidth disabled
+                  #queueId="ngModel" id="queueId" name="queueId">
+              </div>
+
+
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-lg-6">
+          <nb-card size="small">
+            <nb-card-header>Datas</nb-card-header>
+            <nb-card-body>
+
+              <div class="form-group">
+                <label for="dtCreated">Data de Criação</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.dtCreated" fullWidth disabled
+                  #dtCreated="ngModel" id="dtCreated" name="dtCreated" required>
+              </div>
+
+              <div class="form-group">
+                <label for="dtUpdated">Data de Atualização</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.dtUpdated" fullWidth disabled
+                  #dtUpdated="ngModel" id="dtUpdated" name="dtUpdated" required>
+              </div>
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <input type="text"  nbInput [(ngModel)]="attendence.status" fullWidth disabled
+                  #status="ngModel" id="status" name="status" required >
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <nb-card *ngIf="!attendence.client && callAttendence">
+            <nb-card-header>Filas</nb-card-header>
+            <nb-card-body>
+              <nb-select multiple placeholder="Multiple Select" name="queue" id="queue" shape="semi-round" [(ngModel)]="queuesSelect">
+                <nb-option *ngFor="let queue of queues" [value]="queue.queueId" >
+                  {{ queue.description }}
+                </nb-option>
+              </nb-select>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <nb-card>
+            <nb-card-header>Atendimento</nb-card-header>
+            <nb-card-body *ngIf="!callAttendence">
+              Iniciar Atendimento?
+              <button nbButton hero status="success" shape="semi-round" class="right" (click)="onCallAttendence()">Atender</button>
+            </nb-card-body>
+            <div *ngIf="callAttendence">
+              <nb-card-body>
+                Não compareceu?
+                <button nbButton hero status="warning" shape="semi-round" (click)="onFinalizeAttendence()">Não</button>
+              </nb-card-body>
+              <nb-card-body>
+                Atendido?
+                <button nbButton hero status="info" shape="semi-round" (click)="onSendToQueuesAndFinalizeAttendence()">Sim</button>
+              </nb-card-body>
+            </div>
+          </nb-card>
+        </div>
+      </div>
+
+
+
+
+    </form>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton hero status="danger" shape="semi-round" (click)="dismiss()">Fechar</button>
+    <button nbButton hero status="success" shape="semi-round" type="submit" class="right" (click)="onSubmit()">Salvar</button>
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,60 @@
+<nb-card>
+  <nb-card-header>Perfils</nb-card-header>
+  <nb-card-body>
+
+    <form #f="ngForm" autocomplete="off">
+      <div class="row">
+        <div class="col-lg-6">
+          <nb-card>
+            <nb-card-body>
+
+              <div class="form-group">
+                <label for="profileId">Id do Perfil</label>
+                <input type="text"  nbInput [(ngModel)]="profile.profileId" fullWidth disabled
+                  #profileId="ngModel" id="profileId" name="profileId" required>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Nome de Perfil</label>
+                <input type="text"  nbInput [(ngModel)]="profile.description" fullWidth disabled
+                  #description="ngModel" id="description" name="description" required>
+              </div>
+
+              <div class="full-name-inputs">
+                <label for="dtChange">Data de Alteração</label>
+                <input type="text"  nbInput [(ngModel)]="profile.dtChange" fullWidth disabled
+                  #dtChange="ngModel" id="dtChange" name="dtChange" required>
+
+                <label for="status">Status</label>
+                <input type="text"  nbInput [(ngModel)]="profile.status" fullWidth disabled
+                  #status="ngModel" id="status" name="status" required>
+
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+
+        <div class="col-lg-6">
+          <nb-card size="small">
+            <nb-card-header>Filas</nb-card-header>
+            <nb-card-body>
+              <nb-select multiple placeholder="Multiple Select" name="queue" id="queue" shape="semi-round" [(ngModel)]="profile.queues">
+                <nb-option *ngFor="let queue of queues" [value]="queue.queueId" >
+                  {{ queue.description }}
+                </nb-option>
+              </nb-select>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+      </div>
+    </form>
+
+
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="danger" shape="semi-round" (click)="dismiss()">Fechar</button>
+    <button nbButton hero status="success" shape="semi-round" (click)="onSubmit()" class="right">Salvar</button>
+  </nb-card-footer>
+</nb-card>

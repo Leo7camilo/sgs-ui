@@ -1,0 +1,63 @@
+<nb-card>
+  <nb-card-header style="text-align: center;"> Cadastro de Filas</nb-card-header>
+  <nb-card-body>
+
+    <form #f="ngForm" autocomplete="off" >
+      <div class="row">
+        <div class="col-lg-6">
+          <nb-card>
+
+            <nb-card-body>
+              <div class="form-group">
+                <label for="description">Descrição</label>
+                <input type="text"  nbInput [(ngModel)]="queue.description" fullWidth
+                  #description="ngModel" id="description" name="description" required>
+              </div>
+
+              <div class="form-group">
+                <div class="full-name-inputs">
+                  <label for="priority">Priodidade da Fila</label>
+                  <input type="number" min="1" nbInput [(ngModel)]="queue.priority" fullWidth
+                    #priority="ngModel" id="priority" name="priority" required>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+
+        <div class="col-lg-6">
+          <nb-card size="small">
+            <nb-card-header>Permissões</nb-card-header>
+            <nb-card-body>
+              <nb-select multiple placeholder="Multiple Select" name="role" id="role" shape="semi-round" [(ngModel)]="queue.idRoles">
+                <nb-option *ngFor="let role of roles" [value]="role.roleId" >
+                  {{ role.description }}
+                </nb-option>
+              </nb-select>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div class="full-name-inputs">
+      <button nbButton hero status="success" [disabled]="f.invalid" (click)="salvar(f)" >Criar</button>
+    </div>
+  </nb-card-footer>
+
+</nb-card>
+
+
+<nb-card>
+  <nb-card-header>
+    Filas Cadastradas
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onSelectElement($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

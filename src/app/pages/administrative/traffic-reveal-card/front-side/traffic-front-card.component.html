@@ -1,0 +1,16 @@
+<nb-list>
+
+  <nb-list-item class="item" *ngFor="let item of frontCardDataAttendence">
+    <span style="text-align: center;">{{ item.password }}</span>
+    <!--<span>{{ item.client.name }}</span> -->
+    <span style="text-align: center;">{{ item.dtCreated }}</span>
+    <span style="text-align: center;">{{ item.queue?.description}}</span>
+    <span style="text-align: center;">{{ item.status }}</span>
+    <!--<span class="delta" [class.up]="item.delta.up" [class.down]="!item.delta.up">
+      <nb-icon [icon]="item.delta.up ? 'arrow-up' : 'arrow-down'" pack="eva"></nb-icon>
+      {{ item.delta.value }}%
+    </span>
+    <ngx-traffic-bar [barData]="item.comparison" [successDelta]="item.delta.up">
+    </ngx-traffic-bar> -->
+  </nb-list-item>
+</nb-list>

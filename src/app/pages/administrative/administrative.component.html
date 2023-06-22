@@ -1,0 +1,39 @@
+
+<div class="steppers-container row">
+
+
+  <div class="col-xxl-5">
+
+    <ngx-status-card title="Clientes na clínica nesse momento" type=primary [amount]="amountAttendence">
+      <i ngClass="nb-person"></i>
+    </ngx-status-card>
+
+    <div class="row">
+      <div class="col-md-6">
+        <ngx-profit-card></ngx-profit-card>
+      </div>
+      <div class="col-md-6">
+        <ngx-earning-card></ngx-earning-card>
+      </div>
+    </div>
+    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>
+
+  </div>
+  <div class="col-xxl-7">
+    <ngx-administrative-charts></ngx-administrative-charts>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xxl-9">
+    <ngx-administrative-visitors-analytics></ngx-administrative-visitors-analytics>
+  </div>
+
+  <div class="col-xxl-3">
+    <ngx-progress-section></ngx-progress-section>
+  </div>
+
+  <!--<div class="col-xxl-3">
+    <ngx-user-activity></ngx-user-activity>
+  </div> -->
+</div>

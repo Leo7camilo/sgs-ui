@@ -1,0 +1,62 @@
+
+<div class="steppers-container row">
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card>
+      <nb-card-header>
+        Cadastro de Perfil de Usuários
+      </nb-card-header>
+      <nb-card-body>
+        <nb-stepper #stepper>
+          <nb-step [stepControl]="firstForm" label="Primeiro Passo">
+            <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+              <p class="lorem">
+                Descrição
+              </p>
+              <p class="lorem">
+                Aqui informamos a descrição do perfil dos usuários. Não se preocupe, é possível alterar depois!
+              </p>
+              <div class="input-group">
+                <input type="text" placeholder="Entre com o nome" class="form-control" formControlName="firstCtrl"
+                       [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+              </div>
+              <button nbButton nbStepperNext>Próximo</button>
+            </form>
+          </nb-step>
+          <nb-step [stepControl]="secondForm" label="Segundo Passo">
+            <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+              <p class="lorem">
+                Confimação dos dados informados:
+              </p>
+              <p class="lorem-nome">
+                {{firstForm.value.firstCtrl}}
+              </p>
+
+              <button nbButton nbStepperPrevious>Anterior</button>
+              <button nbButton nbStepperNext>Confirma</button>
+            </form>
+            <nb-step [stepControl]="secondForm" [hidden]="true" label="Segundo passo">
+                <div class="step-container">
+                  <h3>Cadastro Realizado com Sucesso!</h3>
+                  <button nbButton (click)="stepper.reset()">Try again</button>
+                </div>
+            </nb-step>
+          </nb-step>
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+
+
+<nb-card>
+  <nb-card-header>
+    Perfis Cadastrados
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onSelectElement($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

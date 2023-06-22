@@ -1,0 +1,51 @@
+
+<div class="steppers-container row">
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card>
+      <nb-card-header>
+        Terminal
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-select placeholder="Selecione" name="terminal" id="terminal" shape="semi-round" [(ngModel)]="terminal">
+          <nb-option *ngFor="let terminal of terminals" [value]="terminal.terminalId" >
+            {{ terminal.name }}
+          </nb-option>
+        </nb-select>
+      </nb-card-body>
+
+
+    </nb-card>
+  </div>
+
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card>
+      <nb-card-header>
+        Fila
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-select placeholder="Selecione" name="queue" id="queue" shape="semi-round" (selectedChange)="onChangeQueue($event)" [(ngModel)]="queue">
+          <nb-option *ngFor="let queue of queues" [value]="queue.queueId" >
+            {{ queue.description }}
+          </nb-option>
+        </nb-select>
+      </nb-card-body>
+
+    </nb-card>
+  </div>
+</div>
+
+
+<nb-card *ngIf="isSelected">
+  <nb-card-header>
+    Atendimentos
+  </nb-card-header>
+
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onSelectElement($event)" >
+      </ng2-smart-table>
+    </nb-card-body>
+
+</nb-card>
