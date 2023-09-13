@@ -46,6 +46,8 @@ import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-c
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
 import { EarningCardBackComponent } from './earning-card/back-side/earning-card-back.component';
 import { StatusCardComponent } from './status-card/status-card.component';
+import { StatusAttendencePipe } from '../../shared/pipes/statusAttendencePipe';
+import { TransformDatePipe } from '../../shared/pipes/transformDatePipe';
 
 
 @NgModule({
@@ -102,6 +104,8 @@ import { StatusCardComponent } from './status-card/status-card.component';
    // ClientDialogComponent
 
     StatusCardComponent,
+    StatusAttendencePipe,
+    TransformDatePipe
   ],
   providers: [
 

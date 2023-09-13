@@ -8,14 +8,14 @@
       <i ngClass="nb-person"></i>
     </ngx-status-card>
 
-    <div class="row">
+    <!--<div class="row">
       <div class="col-md-6">
         <ngx-profit-card></ngx-profit-card>
       </div>
       <div class="col-md-6">
         <ngx-earning-card></ngx-earning-card>
       </div>
-    </div>
+    </div> -->
     <ngx-traffic-reveal-card></ngx-traffic-reveal-card>
 
   </div>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="col-xxl-3">
-    <ngx-progress-section></ngx-progress-section>
+    <ngx-progress-section [mostCompanyClient]="mostCompanyClient"></ngx-progress-section>
   </div>
 
   <!--<div class="col-xxl-3">

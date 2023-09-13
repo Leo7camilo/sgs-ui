@@ -1,25 +1,33 @@
-import { NgxStatusComponent } from './../../shared/status.component';
-import { AttendenceFilter } from './../../shared/model/attendenceFilter';
-import { TerminalsService } from './../parameterization/terminals/terminals.service';
-import {Component, OnDestroy} from '@angular/core';
-import { NbComponentStatus, NbDialogService } from '@nebular/theme';
-import { TerminalFilter } from '../../shared/model/terminalFilter';
-import { ToastService } from '../toast.service';
-import { QueueFilter } from '../../shared/model/queueFilter';
-import { QueueService } from '../parameterization/queues/queues.service';
+import { NgxStatusComponent } from '../../../shared/status.component';
+import { AttendenceFilter } from '../../../shared/model/attendenceFilter';
+import { AttendenceService } from './attendence.service';
+import { TerminalsService } from '../../parameterization/terminals/terminals.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { NbComponentStatus, NbDialogService, NbThemeService } from '@nebular/theme';
+import { TerminalFilter } from '../../../shared/model/terminalFilter';
+import { ToastService } from '../../toast.service';
+import { QueueFilter } from '../../../shared/model/queueFilter';
+import { QueueService } from '../../parameterization/queues/queues.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Queue } from '../../shared/model/queue';
-import { Terminal } from '../../shared/model/terminal';
-import { AttendenceService } from '../attendence/attendence-call/attendence.service';
-import { AnalyticalService } from './analytical.service';
-import { AnalyticsMostCompanyClient } from '../../shared/model/analyticsMostCompanyClient';
+import { AttendenceDialogComponent } from '../modal/dialog/attendence-dialog.component';
+import { Queue } from '../../../shared/model/queue';
+import { Terminal } from '../../../shared/model/terminal';
+import { EventEmitterService } from '../../../shared/services/event-emitter.service';
+
+interface CardSettings {
+  title: string;
+  iconClass: string;
+  type: string;
+}
 
 @Component({
-  selector: 'ngx-administrative',
-  styleUrls: ['./administrative.component.scss'],
-  templateUrl: './administrative.component.html',
+  selector: 'ngx-attendence',
+  styleUrls: ['./attendence-call.component.scss'],
+  templateUrl: './attendence-call.component.html',
 })
-export class AdministrativeComponent implements OnDestroy {
+export class AttendenceCallComponent implements OnInit, OnDestroy {
+
+  private sub: any = null;
 
   terminals = [];
   terminal: Terminal;
@@ -27,39 +35,25 @@ export class AdministrativeComponent implements OnDestroy {
   queue: Queue;
   isSelected = false;
 
-  amountAttendence: number = 0;
-  mostCompanyClient: AnalyticsMostCompanyClient;
-
   source: LocalDataSource = new LocalDataSource();
-
 
   constructor(private terminalService: TerminalsService,
               private queueService: QueueService,
               private attendenceService: AttendenceService,
-              private analyticalService: AnalyticalService,
               private toast: ToastService,
               private dialogService: NbDialogService) {
     this.getTerminals(null);
     this.getQueues(null);
-    this.countAttendenceInTheMoment();
-    this.getMostCompanyClient();
+  }
+
+  ngOnInit(): void {
+    this.sub = EventEmitterService.get('attendencePerformed').subscribe((queueId) => {
+      this.onChangeQueue(queueId);
+    });
   }
 
   ngOnDestroy() {
-    console.log("ngOnDestroy");
-  }
-
-  countAttendenceInTheMoment() {
-    this.attendenceService.countAttendenceInTheCompany()
-      .then((amountAttendence) => {
-        console.log(amountAttendence);
-        this.amountAttendence = amountAttendence['value'];
-      })
-      .catch((response) => {
-        let status: NbComponentStatus = 'danger';
-        let title = "Erro";
-        this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
-      })
+    if (this.sub) this.sub.unsubscribe();
   }
 
   onChangeQueue(queueId : string){
@@ -67,7 +61,7 @@ export class AdministrativeComponent implements OnDestroy {
       attendenceFilter.queueId = queueId;
       attendenceFilter.status = 'WAITING';
 
-   /* this.attendenceService.getAttendence(attendenceFilter)
+    this.attendenceService.getAttendence(attendenceFilter)
       .then((attendences) => {
         this.source.load(attendences['attendence']);
         this.isSelected = true;
@@ -76,7 +70,7 @@ export class AdministrativeComponent implements OnDestroy {
       let status: NbComponentStatus = 'danger';
       let title = "Erro";
       this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
-    }); */
+    });
   }
 
   getTerminals(filter: TerminalFilter) {
@@ -103,18 +97,6 @@ export class AdministrativeComponent implements OnDestroy {
     });
   }
 
-  getMostCompanyClient(){
-    this.analyticalService.getMostCompanyClient()
-      .then(response => {
-        this.mostCompanyClient = response;
-      })
-      .catch(response => {
-        let status: NbComponentStatus = 'danger';
-      let title = "Erro";
-      this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
-      })
-  }
-
   settings = {
     hideSubHeader: true,
     add: {
@@ -136,19 +118,20 @@ export class AdministrativeComponent implements OnDestroy {
       edit: false,     //  if you want to remove edit button
       delete: false,    //  if you want to remove delete button
     },
+    noDataMessage: "Nenhum atendimento encontrado",
     columns: {
-      attendenceId: {
+      /*attendenceId: {
         title: 'ID',
         type: 'string',
-      },
+      },*/
       password: {
         title: 'Senha',
         type: 'number',
       },
-      queueId: {
+      /*queueId: {
         title: 'ID da fila',
         type: 'string',
-      },
+      },*/
       client: {
         title: 'Cliente',
         type: 'string',
@@ -164,6 +147,10 @@ export class AdministrativeComponent implements OnDestroy {
         title: 'Status',
         type: 'string',
         renderComponent: NgxStatusComponent
+      },
+      dtCreated: {
+        title: 'Data de Entrada na Fila',
+        type: 'string',
       },
       terminal: {
         title: 'Terminal de Atendimento',
@@ -182,13 +169,24 @@ export class AdministrativeComponent implements OnDestroy {
   onSelectElement(event): void{
     console.log(JSON.stringify(this.queue));
     console.log(JSON.stringify(this.terminal));
-    /*this.dialogService.open(AttendenceDialogComponent, {
-      context: {
-        attendence: event.data,
-        queue: this.queue.toString(),
-        terminal: this.terminal.toString()
-      },
-    });*/
+
+    if(!this.queue){
+      let status: NbComponentStatus = 'warning';
+      let title = "Aviso";
+      this.toast.showToast(status, title, "Selecione uma Fila");
+    }else if(!this.terminal){
+      let status: NbComponentStatus = 'warning';
+      let title = "Aviso";
+      this.toast.showToast(status, title, "Selecione Terminal");
+    }else{
+      this.dialogService.open(AttendenceDialogComponent, {
+        context: {
+          attendence: event.data,
+          queue: this.queue.toString(),
+          terminal: this.terminal.toString()
+        },
+      });
+    }
   }
 
   onDeleteConfirm(event): void {

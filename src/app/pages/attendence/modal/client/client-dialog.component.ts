@@ -36,6 +36,7 @@ export class ClientDialogComponent {
         this.toast.showToast(status, title, "Cadastro realizado com Sucesso!");
         this.ref.close();
         EventEmitterService.get('clientRegistred').emit();
+        console.log("Emitindo evento: clientRegistred");
       }
     )
     .catch((response) => {

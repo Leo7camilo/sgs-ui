@@ -1,9 +1,9 @@
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AttendenceFilter } from '../../shared/model/attendenceFilter';
+import { AttendenceFilter } from '../../../shared/model/attendenceFilter';
 import { FormGroup } from '@angular/forms';
-import { Queue } from '../../shared/model/queue';
+import { Queue } from '../../../shared/model/queue';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,9 @@ export class AttendenceService {
 
 
   url = environment.baseUrl + '/attendence' + '/afa137be-774f-420b-9bf2-404a02e6af9b';
+
+  urlHist = environment.baseUrl + '/attendence' + '/afa137be-774f-420b-9bf2-404a02e6af9b' + '/hist';
+
 
   constructor(
     private http: HttpClient) {
@@ -69,7 +72,7 @@ export class AttendenceService {
   finalizaAttendece(queueId: string, clientId: string, attendenceId: string) {
     let url = this.url + '/calls/' + attendenceId + '/' +queueId;
     if(clientId != null){
-      url = this.url + '/calls/' + attendenceId + '/' +queueId + '/' + clientId;
+      url = this.url + '/calls/' + attendenceId + '/' +queueId + '/by-client/' + clientId;
     }
     return this.http.delete(url)
       .toPromise()
@@ -137,6 +140,66 @@ export class AttendenceService {
     let url = environment.baseUrl + '/attendence' + '/count-by-company/' + 'afa137be-774f-420b-9bf2-404a02e6af9b';
 
     return this.http.get(url, { headers }).toPromise();
+  }
+
+  getAttendencesHist(filter: AttendenceFilter): Promise<Object> {
+    let params = new HttpParams();
+
+    if(filter != null){
+      params = params.set('status', filter.status);
+      params = params.set('dtCreated', filter.dtCreated);
+      filter.page = 0;
+      filter.itensByPage = 5;
+    }
+
+    let url = this.urlHist;
+
+    params = params.set('page', filter.page)
+          .set('size', filter.itensByPage)
+
+    return this.http.get(url, { params })
+      .toPromise()
+      .then((response: any) => {
+        const attendence = response['content'];
+
+        const result = {
+          attendence,
+          total: response['totalElements']
+        };
+        return result;
+      });
+  }
+
+
+  getLastAttendenceHist(filter: AttendenceFilter): Promise<Object> {
+    let params = new HttpParams();
+
+    if(filter != null){
+      params = params.set('status', filter.status);
+      params = params.set('dtCreated', filter.dtCreated);
+      filter.page = 0;
+      filter.itensByPage = 1;
+    }
+
+    let url = this.urlHist;
+
+    params = params.set('page', filter.page)
+          .set('size', filter.itensByPage)
+          .set('sort', 'dtCreated,DESC');
+
+    return this.http.get(url, { params })
+      .toPromise()
+      .then((response: any) => {
+        const attendence = response['content'];
+        let result = null;
+        if(attendence != null){
+            result = {
+            attendence,
+            total: response['totalElements']
+          };
+        }
+        return result;
+      });
   }
 
 }

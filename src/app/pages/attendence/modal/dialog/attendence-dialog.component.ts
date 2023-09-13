@@ -7,7 +7,7 @@ import { NbComponentStatus, NbDialogRef, NbDialogService } from '@nebular/theme'
 
 import { ToastService } from '../../../toast.service';
 import { Router } from '@angular/router';
-import { AttendenceService } from '../../attendence.service';
+import { AttendenceService } from '../../attendence-call/attendence.service';
 import { Client } from '../../../../shared/model/client';
 import { Observable, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -71,6 +71,7 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = EventEmitterService.get('clientRegistred').subscribe(() => {
+      console.log("Recepcionado evento: clientRegistred");
       this.getClients(null);
     });
   }
@@ -135,8 +136,6 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   private filter(value: string): Client[] {
     const filterValue = value.toLowerCase();
 
@@ -155,6 +154,10 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
 
   onSelectionChange($event) {
     this.filteredOptions$ = this.getFilteredOptions($event);
+    this.filteredOptions$.forEach(client => {
+      this.client = client;
+    });
+    //this.attendence.client = this.client[0];
   }
 
   onAddClient(){
@@ -169,12 +172,24 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
         let status: NbComponentStatus = 'info';
         let title = "Atendimento";
         this.toast.showToast(status, title, "Cliente Chamado");
+
+        let objectCall = {
+          queue: this.queue,
+          terminal: this.terminal,
+          client: this.attendence.client,
+          password: this.attendence.password
+        }
+
+        EventEmitterService.get('clientCall').emit(objectCall);
+        console.log('Emitido evento: clientCall');
     })
     .catch((response) => {
       let status: NbComponentStatus = 'danger';
       let title = "Erro";
       this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
     });
+
+
   }
 
   onSendToQueuesAndFinalizeAttendence(){
@@ -197,7 +212,10 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
   }
 
   onFinalizeAttendence(){
-    this.attendenceService.finalizaAttendece(this.queue, this.attendence.client ? this.attendence.client.clientId : null, this.attendence.attendenceId)
+
+    console.log('Finalizando atendimento para o cliente: '+ JSON.stringify(this.attendence.client));
+    console.log('Finalizando atendimento para o cliente: '+ JSON.stringify(this.client));
+    this.attendenceService.finalizaAttendece(this.queue, this.client ? this.client[0].clientId : null, this.attendence.attendenceId)
       .then(() => {
         let status: NbComponentStatus = 'success';
         let title = "Atendimento";

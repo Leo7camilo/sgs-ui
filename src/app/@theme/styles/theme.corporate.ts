@@ -183,6 +183,10 @@ export const CORPORATE_THEME = {
       thirdAreaGradFrom: 'rgba(0, 0, 0, 0)',
       thirdAreaGradTo: 'rgba(0, 0, 0, 0)',
       thirdShadowLineDarkBg: 'rgba(0, 0, 0, 0)',
+
+      QuatroAreaGradFrom: 'rgb(255, 130, 71.2)',
+      QuatroAreaGradTo: 'rgb(255, 130, 71)',
+      QuatroShadowLineDarkBg: 'rgba(0, 0, 0, 0)',
     },
 
     profit: {

@@ -1,6 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ProgressInfo, StatsProgressBarData } from '../../../@core/data/stats-progress-bar';
 import { takeWhile } from 'rxjs/operators';
+import { AnalyticsMostCompanyClient } from '../../../shared/model/analyticsMostCompanyClient';
 
 @Component({
   selector: 'ngx-progress-section',
@@ -11,6 +12,8 @@ export class AdministrativeProgressSectionComponent implements OnDestroy {
 
   private alive = true;
 
+  @Input() mostCompanyClient: AnalyticsMostCompanyClient;
+
   progressInfoData: ProgressInfo[];
 
   constructor(private statsProgressBarService: StatsProgressBarData) {
@@ -18,7 +21,11 @@ export class AdministrativeProgressSectionComponent implements OnDestroy {
       .pipe(takeWhile(() => this.alive))
       .subscribe((data) => {
         this.progressInfoData = data;
+
+        console.log(JSON.stringify(this.progressInfoData));
       });
+
+
   }
 
   ngOnDestroy() {

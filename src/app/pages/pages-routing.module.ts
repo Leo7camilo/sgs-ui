@@ -27,9 +27,9 @@ const routes: Routes = [{
     },
     {
       path: 'attendence',
-      component: AttendenceComponent
+      loadChildren: () => import('./attendence/attendence.module')
+        .then(m => m.AttendenceModule),
     },
-
     {
       path: 'administrative',
       component: AdministrativeComponent

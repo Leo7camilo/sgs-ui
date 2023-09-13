@@ -1,0 +1,43 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .solar-card nb-card-header {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  @include media-breakpoint-down(sm) {
+    ngx-traffic {
+      display: none;
+    }
+  }
+}
+
+
+.table-cell-1 td {
+  padding: 200px; /* Adicione algum espaçamento interno */
+}
+
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.background-container {
+  margin-top: 20px;
+}
+
+.row {
+  position: relative;
+}
+
+/* Defina a largura das colunas da tabela como "auto" para ajustá-las automaticamente */
+.table-cell th, .table-cell td {
+  width: auto;
+  white-space: nowrap; /* Evita que o conteúdo das células seja quebrado */
+  text-align: center; /* Alinhe o texto à esquerda nas células */
+}

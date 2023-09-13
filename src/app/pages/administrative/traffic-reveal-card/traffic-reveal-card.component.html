@@ -2,6 +2,13 @@
   <nb-card-front>
     <nb-card size="small">
       <ngx-traffic-cards-header [type]="period" (periodChange)="setPeriodAngGetData($event)"></ngx-traffic-cards-header>
+      <tr style="display: flex;">
+        <th style="text-align: center; padding: 8px;flex: 1">Senha</th>
+        <th style="text-align: center; padding: 8px;flex: 1">H. Entrada</th>
+        <th style="text-align: center; padding: 8px;flex: 1">Fila</th>
+        <th style="text-align: center; padding: 8px;flex: 1">Status</th>
+      </tr>
+
       <ngx-traffic-front-card [frontCardDataAttendence]="attendences"></ngx-traffic-front-card>
       <!--<nb-icon class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView()"></nb-icon>-->
     </nb-card>

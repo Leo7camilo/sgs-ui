@@ -12,5 +12,5 @@ export class Attendence {
   dtUpdated: string;
   status: string;
   company: Company;
-  terimnal: Terminal;
+  terminal: Terminal;
 }

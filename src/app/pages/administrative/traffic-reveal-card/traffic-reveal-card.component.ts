@@ -1,4 +1,4 @@
-import { AttendenceService } from './../../attendence/attendence.service';
+import { AttendenceService } from '../../attendence/attendence-call/attendence.service';
 import { Component, OnDestroy } from '@angular/core';
 import { TrafficList, TrafficListData } from '../../../@core/data/traffic-list';
 import { TrafficBarData, TrafficBar } from '../../../@core/data/traffic-bar';

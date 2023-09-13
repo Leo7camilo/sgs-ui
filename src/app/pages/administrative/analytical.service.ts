@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AttendenceChartSummary } from '../../shared/model/attendenceChartSummary';
 import { AnalyticsGroupAttendenceByDate } from '../../shared/model/analyticsGroupAttendenceByDate';
+import { AnalyticsMostCompanyClient } from '../../shared/model/analyticsMostCompanyClient';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,17 @@ export class AnalyticalService {
         .append('Content-Type', 'application/json');
 
     return this.http.get(this.url + '/group-attendence-by-date', { headers })
+      .toPromise()
+      .then((response: any) => {
+        return response;
+      });
+  }
+
+  getMostCompanyClient(): Promise<AnalyticsMostCompanyClient> {
+    const headers = new HttpHeaders()
+        .append('Content-Type', 'application/json');
+
+    return this.http.get(this.url + '/most-company-client', { headers })
       .toPromise()
       .then((response: any) => {
         return response;

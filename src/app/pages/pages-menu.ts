@@ -1,12 +1,28 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-
   {
     title: 'Atendimento',
     icon: 'phone-call-outline',
-    link: '/pages/attendence',
+    children: [
+      {
+        title: 'Atendimento',
+        link: '/pages/attendence/attendence-call',
+        icon: 'phone-call-outline'
+      },
+      {
+        title: 'Consultar Atendimento',
+        link: '/pages/attendence/attendence-consult',
+        icon: 'search-outline'
+      },
+      {
+        title: 'Fila de Atendimento',
+        link: '/pages/attendence/attendence-queue',
+        icon: 'person-done-outline'
+      }
+    ]
   },
+
   {
     title: 'Parametrizações',
     icon: 'edit-2-outline',

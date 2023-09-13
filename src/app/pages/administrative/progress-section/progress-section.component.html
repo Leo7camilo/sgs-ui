@@ -1,9 +1,10 @@
 <nb-card size="medium">
-  <nb-card-body>
-    <div class="progress-info" *ngFor="let item of progressInfoData">
-      <div class="subtitle">{{ item.title }}</div>
-      <div class="h3">{{ item.value | ngxNumberWithCommas }}</div>
-      <nb-progress-bar [value]="item.activeProgress"></nb-progress-bar>
+  <nb-card-body *ngIf="mostCompanyClient != null">
+    <label>Top 3 empresas com mais atendimentos</label>
+    <div class="progress-info" *ngFor="let item of mostCompanyClient.companyClientDto">
+      <div class="subtitle">{{ item.company }}</div>
+      <div class="h3">{{ item.count | ngxNumberWithCommas }}</div>
+      <nb-progress-bar [value]="item.count"></nb-progress-bar>
       <div class="caption description">
         <bdi>{{ item.description }}</bdi>
       </div>

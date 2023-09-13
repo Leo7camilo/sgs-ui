@@ -18,6 +18,7 @@ export class ChartPanelHeaderComponent implements OnDestroy {
   @Output() periodChange = new EventEmitter<string>();
 
   @Input() type: string = 'week';
+  queuesAttendence = [];
 
   types: string[] = ['week', 'month', 'year'];
   chartLegend: {iconColor: string; title: string}[] = [];
@@ -26,11 +27,9 @@ export class ChartPanelHeaderComponent implements OnDestroy {
   currentTheme: string;
 
   colorOptions = [
-    'rgb(0, 214, 143)', 'rgb(51, 102, 255)', 'rgb(237, 241, 247)'
+    'rgb(0, 214, 143)', 'rgb(51, 102, 255)', 'rgb(237, 241, 247)',
+    'rgb(255, 130, 71)', 'rgb(70, 130, 180)', 'rgb(165, 42, 42)'
   ]
-
-  queuesAttendence = [];
-
   constructor(private themeService: NbThemeService,
               private breakpointService: NbMediaBreakpointsService,
               private analyticsService: AnalyticalService,
@@ -51,6 +50,7 @@ export class ChartPanelHeaderComponent implements OnDestroy {
         });
 
       this.getGroupAttendenceTitle();
+      this.setLegendItems();
   }
 
   getGroupAttendenceTitle() {
@@ -75,8 +75,8 @@ export class ChartPanelHeaderComponent implements OnDestroy {
   setLegendItems() {
     for(let i = 0; i < this.queuesAttendence.length; i++){
       let legend = {
-        iconColor: this.colorOptions[0],
-        title: this.queuesAttendence[0]
+        iconColor: this.colorOptions[i],
+        title: this.queuesAttendence[i]
       }
       this.chartLegend.push(legend);
     }

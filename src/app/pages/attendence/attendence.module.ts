@@ -1,3 +1,4 @@
+import { Attendence } from './../../shared/model/attendence';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NgModule } from '@angular/core';
@@ -18,13 +19,21 @@ import {
   NbRouteTabsetModule,
   NbSearchModule,
   NbSelectModule,
-  NbTabsetModule, NbTooltipModule, NbUserModule,
+  NbTabsetModule, NbTooltipModule, NbTreeGridModule, NbUserModule,
 } from '@nebular/theme';
 
-
+import { AttendenceRoutingModule } from './attendence-routing.module'
 import { AttendenceDialogComponent } from './modal/dialog/attendence-dialog.component';
 import { ClientDialogComponent } from './modal/client/client-dialog.component';
 import { AttendenceComponent } from './attendence.component';
+import { AttendenceCallComponent } from './attendence-call/attendence-call.component';
+import { AttendenceConsultComponent } from './attendence-consult/attendence-consult.component';
+import { AttendenceQueueComponent } from './attendence-queue/attendence-queue.component';
+
+import { ClientAttendencePipe } from '../../shared/pipes/clientAttendencePipe';
+import { NullResultPipe } from '../../shared/pipes/nullResultPipe';
+import { QueueAttendencePipe } from '../../shared/pipes/queueAttendencePipe';
+import { TerminalAttendencePipe } from '../../shared/pipes/terminalAttendencePipe';
 
 @NgModule({
   imports: [
@@ -49,12 +58,22 @@ import { AttendenceComponent } from './attendence.component';
     NbDatepickerModule,
     NbIconModule,
     NbSearchModule,
-    NbAutocompleteModule
+    NbAutocompleteModule,
+    AttendenceRoutingModule,
+    NbTreeGridModule,
+
   ],
   declarations: [
+    AttendenceQueueComponent,
+    AttendenceConsultComponent,
+    AttendenceCallComponent,
     AttendenceComponent,
     AttendenceDialogComponent,
-    ClientDialogComponent
+    ClientDialogComponent,
+    ClientAttendencePipe,
+    NullResultPipe,
+    QueueAttendencePipe,
+    TerminalAttendencePipe
   ],
   providers: [
   ],

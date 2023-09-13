@@ -183,6 +183,13 @@ export const COSMIC_THEME = {
       thirdAreaGradFrom: 'rgba(0, 214, 143, 0.7)',
       thirdAreaGradTo: 'rgba(0, 214, 143, 0.4)',
       thirdShadowLineDarkBg: baseThemeVariables.success,
+
+      QuatroLineGradFrom: 'rgb(255, 130, 71.2)',
+      QuatroLineGradTo: 'rgb(255, 130, 71)',
+
+      QuatroAreaGradFrom: 'rgb(255, 130, 71.2)',
+      QuatroAreaGradTo: 'rgb(255, 130, 71)',
+      QuatroShadowLineDarkBg: 'rgba(0, 0, 0, 0)',
     },
 
     profit: {
