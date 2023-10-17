@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { delay, takeWhile } from 'rxjs/operators';
 import { LayoutService } from '../../../../@core/utils/layout.service';
@@ -14,6 +14,10 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
   private alive = true;
 
   @Input() value: number;
+  @Input() new: number;
+  @Input() know: number;
+  @Input() percentNew: number;
+  @Input() percentKnow: number;
 
   option: any = {};
   chartLegend: { iconColor: string; title: string }[];
@@ -27,6 +31,7 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
       )
       .subscribe(() => this.resizeChart());
   }
+
 
   ngAfterViewInit() {
     this.theme.getJsTheme()
@@ -47,11 +52,11 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
     this.chartLegend = [
       {
         iconColor: visitorsPieLegend.firstSection,
-        title: 'New Visitors',
+        title: 'Novos Pacientes',
       },
       {
         iconColor: visitorsPieLegend.secondSection,
-        title: 'Return Visitors',
+        title: 'Pacientes Retornados',
       },
     ];
   }
@@ -74,7 +79,7 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
           radius: visitorsPie.firstPieRadius,
           data: [
             {
-              value: this.value,
+              value: this.percentKnow,
               name: ' ',
               label: {
                 normal: {
@@ -112,7 +117,7 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
               hoverAnimation: false,
             },
             {
-              value: 100 - this.value,
+              value: this.percentNew,
               name: ' ',
               tooltip: {
                 show: false,
@@ -139,7 +144,7 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
           radius: visitorsPie.secondPieRadius,
           data: [
             {
-              value: this.value,
+              value: this.percentKnow,
               name: ' ',
               label: {
                 normal: {
@@ -164,7 +169,7 @@ export class AdministrativeVisitorsStatisticsComponent implements AfterViewInit,
               hoverAnimation: false,
             },
             {
-              value: 100 - this.value,
+              value: this.percentNew,
               name: ' ',
               tooltip: {
                 show: false,

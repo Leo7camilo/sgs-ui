@@ -68,7 +68,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
       xAxis: [
         {
           type: 'category',
-          data: this.profitChartData.chartLabel,
+          data: this.profitChartData?.chartLabel,
           axisTick: {
             alignWithLabel: true,
           },
@@ -166,7 +166,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
     this.echartsIntance.setOption({
       series: series,
       xAxis: {
-        data: this.profitChartData.chartLabel,
+        data: this.profitChartData?.chartLabel,
       },
     });
   }

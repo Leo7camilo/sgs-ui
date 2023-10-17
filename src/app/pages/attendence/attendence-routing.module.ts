@@ -5,6 +5,7 @@ import { AttendenceCallComponent } from './attendence-call/attendence-call.compo
 import { AttendenceComponent } from './attendence.component';
 import { AttendenceConsultComponent } from './attendence-consult/attendence-consult.component';
 import { AttendenceQueueComponent } from './attendence-queue/attendence-queue.component';
+import { AttendencePasswordComponent } from './attendence-password/attendence-password.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +22,10 @@ const routes: Routes = [{
     {
       path: 'attendence-queue',
       component: AttendenceQueueComponent,
+    },
+    {
+      path: 'attendence-password',
+      component: AttendencePasswordComponent,
     },
   ],
 }];

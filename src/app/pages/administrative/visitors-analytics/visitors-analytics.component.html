@@ -1,7 +1,7 @@
 <nb-card size="medium">
   <nb-card-header>
-    <h3>Visitors Analytics</h3>
-    <div class="subtitle">Consumption</div>
+    <h3>Pacientes</h3>
+    <div class="subtitle">Novos/Retorno</div>
   </nb-card-header>
   <nb-card-body>
     <div class="chart-container">
@@ -12,7 +12,7 @@
     </div>
   </nb-card-body>
 
-  <ngx-slide-out [showVisitorsStatistics]="true">
-    <ngx-visitors-statistics [value]="pieChartValue"></ngx-visitors-statistics>
+  <ngx-slide-out [showVisitorsStatistics]="showVisitorsStatistics">
+    <ngx-visitors-statistics [value]="pieChartValue" [new]="new" [know]="know" [percentNew]="percentNew" [percentKnow]="percentKnow"></ngx-visitors-statistics>
   </ngx-slide-out>
 </nb-card>

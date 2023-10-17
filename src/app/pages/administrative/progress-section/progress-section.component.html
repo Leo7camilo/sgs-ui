@@ -1,7 +1,7 @@
 <nb-card size="medium">
   <nb-card-body *ngIf="mostCompanyClient !== null">
     <label>Top 3 empresas com mais atendimentos</label>
-    <div class="progress-info" *ngFor="let item of mostCompanyClient.companyClientDto">
+    <div class="progress-info" *ngFor="let item of mostCompanyClient?.companyClientDto">
       <div class="subtitle">{{ item.company }}</div>
       <div class="h3">{{ item.count | ngxNumberWithCommas }}</div>
       <nb-progress-bar [value]="item.count"></nb-progress-bar>

@@ -11,6 +11,7 @@ import { Queue } from '../../../shared/model/queue';
 export class AttendenceService {
 
 
+
   url = environment.baseUrl + '/attendence' + '/afa137be-774f-420b-9bf2-404a02e6af9b';
 
   urlHist = environment.baseUrl + '/attendence' + '/afa137be-774f-420b-9bf2-404a02e6af9b' + '/hist';
@@ -201,6 +202,15 @@ export class AttendenceService {
         }
         return result;
       });
+  }
+
+  getPassword(): Promise<Object> {
+    const headers = new HttpHeaders()
+    .append('Content-Type', 'application/json');
+
+    let url = this.url + '/get-next-password';
+
+    return this.http.get(url, { headers }).toPromise();
   }
 
 }

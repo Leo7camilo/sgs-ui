@@ -60,6 +60,7 @@
                 <th>Senha</th>
                 <th>Cliente</th>
                 <th>Fila</th>
+                <th>Terminal</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +68,7 @@
                 <td>{{ attendence.password }}</td>
                 <td>{{ attendence.client | clientAttendencePipe }}</td>
                 <td>{{ attendence.queue.description }}</td>
+                <td>{{ attendence.terminal.name }}</td>
               </tr>
             </tbody>
           </table>

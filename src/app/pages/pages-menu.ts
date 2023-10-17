@@ -19,6 +19,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Fila de Atendimento',
         link: '/pages/attendence/attendence-queue',
         icon: 'person-done-outline'
+      },
+      {
+        title: 'Senha',
+        link: '/pages/attendence/attendence-password',
+        icon: 'smiling-face-outline'
       }
     ]
   },

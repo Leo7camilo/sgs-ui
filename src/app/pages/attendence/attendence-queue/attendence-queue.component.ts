@@ -57,14 +57,16 @@ export class AttendenceQueueComponent implements OnInit, OnDestroy {
     }); */
 
 
-    this.getLasAttendence();
-    this.sub = interval(10000).subscribe(() => {
-      this.getLasAttendence();
+    this.getAttentenceQueueAndHistAttendences();
+    this.sub = interval(12000).subscribe(() => {
+      this.getAttentenceQueueAndHistAttendences();
     });
-
-    this.getAttendences();
   }
 
+  getAttentenceQueueAndHistAttendences(){
+    this.getLasAttendence();
+    this.getAttendences();
+  }
   /**
    *
    * let objectCall = {
@@ -133,9 +135,11 @@ export class AttendenceQueueComponent implements OnInit, OnDestroy {
         }
       })
       .catch((response => {
-        let status: NbComponentStatus = 'danger';
-        let title = "Erro";
-        this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
+        if(response.error){
+          let status: NbComponentStatus = 'danger';
+          let title = "Erro";
+          this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
+        }
       }));
   }
 

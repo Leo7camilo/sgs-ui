@@ -34,6 +34,7 @@ import { ClientAttendencePipe } from '../../shared/pipes/clientAttendencePipe';
 import { NullResultPipe } from '../../shared/pipes/nullResultPipe';
 import { QueueAttendencePipe } from '../../shared/pipes/queueAttendencePipe';
 import { TerminalAttendencePipe } from '../../shared/pipes/terminalAttendencePipe';
+import { AttendencePasswordComponent } from './attendence-password/attendence-password.component';
 
 @NgModule({
   imports: [
@@ -67,13 +68,15 @@ import { TerminalAttendencePipe } from '../../shared/pipes/terminalAttendencePip
     AttendenceQueueComponent,
     AttendenceConsultComponent,
     AttendenceCallComponent,
+    AttendencePasswordComponent,
     AttendenceComponent,
     AttendenceDialogComponent,
     ClientDialogComponent,
     ClientAttendencePipe,
     NullResultPipe,
     QueueAttendencePipe,
-    TerminalAttendencePipe
+    TerminalAttendencePipe,
+
   ],
   providers: [
   ],

@@ -146,7 +146,16 @@ export class AttendenceCallComponent implements OnInit, OnDestroy {
       status: {
         title: 'Status',
         type: 'string',
-        renderComponent: NgxStatusComponent
+
+        valuePrepareFunction: (data) => {
+          switch(data) {
+            case "NOT_FIT": return "INAPTO"
+            case "WAITING": return "AGUARDANDO"
+            case "IN_ATTENDENCE": return "EM ATENDIMENTO"
+            case "ATTENDED": return "ATENDIDO"
+            default:  return "";
+          }
+        }
       },
       dtCreated: {
         title: 'Data de Entrada na Fila',

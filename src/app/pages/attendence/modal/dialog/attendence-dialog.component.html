@@ -55,7 +55,7 @@
 
 
               <div class="form-group" *ngIf="attendence.queue?.queueId">
-                <label for="queueId">QueueId</label>
+                <label for="queueId">Id da Fila</label>
                 <input type="text"  nbInput [(ngModel)]="attendence.queue.queueId" fullWidth disabled
                   #queueId="ngModel" id="queueId" name="queueId">
               </div>
@@ -68,9 +68,7 @@
 
         <div class="col-lg-6">
           <nb-card size="small">
-            <nb-card-header>Datas</nb-card-header>
             <nb-card-body>
-
               <div class="form-group">
                 <label for="dtCreated">Data de Criação</label>
                 <input type="text"  nbInput [(ngModel)]="attendence.dtCreated" fullWidth disabled
@@ -85,7 +83,7 @@
 
               <div class="form-group">
                 <label for="status">Status</label>
-                <input type="text"  nbInput [(ngModel)]="attendence.status" fullWidth disabled
+                <input type="text"  nbInput [ngModel]="attendence.status" fullWidth disabled
                   #status="ngModel" id="status" name="status" required >
               </div>
             </nb-card-body>
@@ -140,6 +138,6 @@
 
   <nb-card-footer>
     <button nbButton hero status="danger" shape="semi-round" (click)="dismiss()">Fechar</button>
-    <button nbButton hero status="success" shape="semi-round" type="submit" class="right" (click)="onSubmit()">Salvar</button>
+    <button nbButton hero status="success" shape="semi-round" type="submit" class="right" (click)="onSubmit()" [disabled]="!attended">Salvar</button>
   </nb-card-footer>
 </nb-card>

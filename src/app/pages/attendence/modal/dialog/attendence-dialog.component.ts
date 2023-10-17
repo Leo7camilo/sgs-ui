@@ -17,6 +17,7 @@ import { QueueFilter } from '../../../../shared/model/queueFilter';
 import { AttendenceCreated } from '../../../../shared/model/attendenceCreated';
 import { ClientDialogComponent } from '../client/client-dialog.component';
 import { EventEmitterService } from '../../../../shared/services/event-emitter.service';
+import { StatusAttendencePipe } from '../../../../shared/pipes/statusAttendencePipe';
 
 @Component({
   selector: 'ngx-attendence-dialog',
@@ -51,6 +52,10 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
   callAttendence: boolean = false;
   attended : boolean = false;
 
+  canSalve : boolean = false;
+  formattedStatus: string;
+
+
   private sub: any = null;
 
   constructor(
@@ -71,7 +76,6 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = EventEmitterService.get('clientRegistred').subscribe(() => {
-      console.log("Recepcionado evento: clientRegistred");
       this.getClients(null);
     });
   }
@@ -157,7 +161,6 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
     this.filteredOptions$.forEach(client => {
       this.client = client;
     });
-    //this.attendence.client = this.client[0];
   }
 
   onAddClient(){
@@ -166,6 +169,9 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
   }
 
   onCallAttendence(){
+    console.log('client onCallAttendence: '+this.client);
+
+    this.canSalve = true;
     this.callAttendence = true;
     this.attendenceService.makeAttendence(this.queue, this.terminal, this.attendence.client ? this.attendence.client.clientId : "", this.attendence.attendenceId)
       .then(() => {
@@ -181,41 +187,36 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
         }
 
         EventEmitterService.get('clientCall').emit(objectCall);
-        console.log('Emitido evento: clientCall');
     })
     .catch((response) => {
       let status: NbComponentStatus = 'danger';
       let title = "Erro";
       this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
     });
-
-
   }
 
   onSendToQueuesAndFinalizeAttendence(){
-
-    this.attended = true;
-    this.onFinalizeAttendence();
-
-    /*
-    console.log(JSON.stringify(this.inputFormControl));
-    console
-
-    if(this.attendence.client || this.input.value){
-
-    }else{
+    if(!this.attendence.client && !this.client){
       let status: NbComponentStatus = 'warning';
-        let title = "Aviso";
-        this.toast.showToast(status, title, "Informe o cliente");
-    }*/
-
+      let title = "Aviso";
+      this.toast.showToast(status, title, "Informe o cliente");
+    }else{
+      this.attended = true;
+      this.onFinalizeAttendence();
+    }
   }
 
   onFinalizeAttendence(){
+    let clientId: string = null;
+    if(this.client){
+      clientId = this.client[0].clientId;
+    }else{
+      if(this.attendence.client){
+        clientId = this.attendence.client.clientId;
+      }
+    }
 
-    console.log('Finalizando atendimento para o cliente: '+ JSON.stringify(this.attendence.client));
-    console.log('Finalizando atendimento para o cliente: '+ JSON.stringify(this.client));
-    this.attendenceService.finalizaAttendece(this.queue, this.client ? this.client[0].clientId : null, this.attendence.attendenceId)
+    this.attendenceService.finalizaAttendece(this.queue, clientId, this.attendence.attendenceId)
       .then(() => {
         let status: NbComponentStatus = 'success';
         let title = "Atendimento";
@@ -227,24 +228,4 @@ export class AttendenceDialogComponent implements OnInit, OnDestroy {
       this.toast.showToast(status, title, response.error['0'].mensagemUsuario);
     });
   }
-
-  /*
-  onModelChange2(value: string) {
-    this.filteredNgModelOptions$ = of(this.filter2(value));
-  }
-
-  onModelChange(value: Client) {
-    this.filteredNgModelOptions$ = of(this.filter(value));
-  }
-
-  private filter(value: Client): Client[] {
-    console.log(value);
-    return this.clients.filter(optionValue => optionValue.name.toLocaleLowerCase().includes(value.name.toLocaleLowerCase()));
-  }
-
-  onModelChange(client : Client){
-    console.log(client);
-    this.filteredNgModelOptions$ = of(this.filter(client));
-  }
-  */
 }
